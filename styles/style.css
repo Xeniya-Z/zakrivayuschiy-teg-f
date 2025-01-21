@@ -11,21 +11,21 @@
 
 .page {
   color: var(--main-text-color, #000000);
-  font-family: var(--main-font-family);
+  font-family: var(--main-font-family, "Inter", sans-serif);
   font-size: var(--main-font-size, 18px);
-  background-image: var(--bg-image);
+  background-image: var(--bg-image, repeating-linear-gradient(to right, #d3d3d3 0 2px, transparent 2px 4px), repeating-linear-gradient(to bottom,#d3d3d3 0 2px, transparent 2px 4px), repeating-linear-gradient(to bottom, #e7e7e7 0.01%, #1a1a1a 100%));
   background-size: cover;
   background-attachment: fixed;
   min-inline-size: 320px;
   min-block-size: 100dvb;
-  font-variation-settings: wght(var(--main-font-weight, 400));
+  font-variation-settings: "wght" (var(--main-font-weight, 400));
 }
 
 .header {
   margin: auto;
   margin-block: 100px;
   padding-block: clamp(120px, 8.889vw + 1.5rem, 128px);
-  font-family: var(--accent-font-family);
+  font-family: var(--accent-font-family, "PressStart2P", monospace);
   text-align: center;
 }
 
@@ -65,9 +65,10 @@
 
 .card__title {
   border-block-end: 2px solid var(--border-color, #000000);
-  padding-inline: 9px;
-  padding-block: 6px 4px;
-  font-weight: var(--subtitle-font-weight, 700);
+  padding-inline: 10px;
+  padding-block: 5px 4px;
+  font-variation-settings: "wght" var(--subtitle-font-weight, 700);
+  line-height: 22px;
 }
 
 .card__image-container {
@@ -80,7 +81,7 @@
   object-fit: cover;
   object-position: center;
   inline-size: 100%;
-  aspect-ratio: 1/1;
+  aspect-ratio: 1 / 1;
 }
 
 .sepia-filter {
@@ -119,13 +120,14 @@
   position: absolute;
   top: clamp(22px, 4vw + 0.4rem, 25px);
   right: clamp(11px, 2vw + 0.1rem, 25px);
-  font-family: var(--accent-font-family, "PressStart2P");
+  font-family: var(--accent-font-family, "PressStart2P", monospace);
   font-size: var(--small-font-size, 14px);
   text-shadow: -1px 0 var(--text-stroke-color, #ffffff),
     0 1px var(--text-stroke-color, #ffffff),
     1px 0 var(--text-stroke-color, #ffffff),
     0 -1px var(--text-stroke-color, #ffffff);
   mix-blend-mode: hard-light;
+  opacity: 0.5;
 }
 
 @supports (
@@ -143,7 +145,7 @@
   display: flex;
   flex-direction: column;
   gap: 27px;
-  margin-block: 24px 26px;
+  margin-block: 25px;
   padding-inline: 25px;
   line-height: 21px;
 }
@@ -154,17 +156,21 @@
   align-items: center;
   gap: 4px;
   margin-inline-end: 25px;
-  margin-block-end: 24px;
+  margin-block-end: 25px;
   max-block-size: 38px;
 }
 
 .button {
   position: relative;
   border: 2px solid var(--border-color, #000000);
-  font-family: var(--accent-font-family);
+  font-family: var(--accent-font-family, "PressStart2P", monospace);
   font-size: var(--small-font-size, 14px);
   background-color: var(--bg-color, #ffffff);
   cursor: pointer;
+}
+
+.button:focus {
+  outline: none;
 }
 
 .card__icon-button {
@@ -179,83 +185,6 @@
 
 .card__icon-button:focus-visible {
   border: 2px solid var(--border-color, #000000);
-}
-
-.sparks {
-  opacity: 0;
-}
-
-.core {
-  fill: transparent;
-  transition: fill 0.3s ease-in, fill 0.3s 0.03s ease-out;
-}
-
-.main-body {
-  fill: transparent;
-  transition: fill 0.3s ease-out;
-}
-
-.like-icon:hover .core {
-  fill: var(--like-icon-contour-color, black);
-}
-
-.like-icon:hover .main-body {
-  fill: var(--like-icon-contour-color, black);
-  transition: fill 0.3s 0.05s ease-in;
-}
-
-.like-icon:active .core {
-  fill: var(--like-icon-main-body-color, #ff0000);
-}
-
-.like-icon:active .main-body {
-  fill: var(--like-icon-main-body-color, #ff0000);
-  transition: fill 0.3s 0.05s ease-in;
-}
-
-.like-icon.is-liked .core {
-  fill: var(--like-icon-main-body-color, #ff0000);
-}
-
-.like-icon.is-liked .main-body {
-  fill: var(--like-icon-main-body-color, #ff0000);
-  transition: fill 0.3s 0.05s ease-in;
-}
-
-.like-icon.is-liked .contour {
-  fill: var(--like-icon-main-body-color, #ff0000);
-  transition: fill 0.3s 0.06s ease-in;
-}
-
-.heart {
-  transform: scale(1);
-  transform-origin: center;
-}
-
-.like-icon.is-liked .heart {
-  animation: scale-up 0.3s ease-in 0.1s;
-}
-
-@keyframes scale-up {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.2);
-  }
-}
-
-.like-icon.is-liked .sparks {
-  animation: spark-animation 0.3s ease-in 0.3s;
-}
-
-@keyframes spark-animation {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 
 .card__like-button {
@@ -282,41 +211,6 @@
   block-size: 55px;
 }
 
-.button:focus {
-  outline: none;
-}
-
-.card__like-button:focus-visible,
-.dialog-button:focus-visible {
-  box-shadow: 2px 2px 0px var(--border-color, #000000);
-  transition: box-shadow 0.3s ease;
-}
-
-.card__like-button:hover,
-.dialog-button:hover {
-  background-color: black;
-  transition: background-color 5s;
-}
-
-.card__like-button::after,
-.dialog-button::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--border-color, #000000);
-  transition: transform 0.5s ease-in-out;
-  transform: scaleX(0);
-  transform-origin: left;
-}
-
-.card__like-button:hover::after,
-.dialog-button:hover::after {
-  transform: scaleX(1);
-}
-
 .floppy-icon {
   position: relative;
   z-index: 2;
@@ -327,8 +221,7 @@
 .dialog-block {
   border: 2px solid var(--border-color, #000000);
   padding-inline: 30px;
-  font-family: var(--accent-font-family);
-  font-size: var(--small-font-size, 14px);
+  font-family: var(--accent-font-family, "PressStart2P", monospace);
   line-height: 21px;
   text-transform: uppercase;
   max-inline-size: 355px;
@@ -352,16 +245,24 @@ body:has(.dialog-block[open]) {
   overflow: hidden;
 }
 
-.close-button {
+.dialog__text {
+  font-size: var(--small-font-size, 14px);
+  }
+
+.dialog-form {
   grid-column: span 2;
+}
+
+.close-button {
   text-transform: uppercase;
   block-size: 40px;
+  inline-size: 100%;
 }
 
 @media (width <= 375px) {
   .card {
     --card-width: 100vw;
-    inline-size: var(--card-width);
+    inline-size: var(--card-width, 100vw);
   }
 
   .dialog-button {
@@ -374,6 +275,10 @@ body:has(.dialog-block[open]) {
   .floppy-icon {
     block-size: 28px;
     inline-size: 28px;
+  }
+
+  .dialog-block {
+    padding-inline: 40px;
   }
 
   .dialog-block[open] {
